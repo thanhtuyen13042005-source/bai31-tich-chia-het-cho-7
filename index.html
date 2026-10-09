@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tính tích số chia hết cho 7 - Nguyễn Thanh Tuyến</title>
+    <!-- Nhúng Bootstrap 5 để làm giao diện đẹp nhanh chóng -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light py-5">
+
+    <div class="container" style="max-width: 600px;">
+        <div class="card shadow-sm p-4">
+            <h2 class="text-center mb-4 text-primary">Tính Tích Các Số Chia Hết Cho 7</h2>
+            
+            <!-- Form nhập liệu dựa theo gợi ý -->
+            <form onsubmit="handleSubmit(event)">
+                <div class="mb-3">
+                    <label for="startNum" class="form-label">Nhập số đầu:</label>
+                    <input type="number" class="form-control" id="startNum" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="endNum" class="form-label">Nhập số cuối:</label>
+                    <input type="number" class="form-control" id="endNum" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary w-100">Tính Tích</button>
+            </form>
+
+            <!-- Khu vực hiển thị kết quả -->
+            <div class="mt-4 p-3 bg-white border rounded text-center">
+                <h5 class="text-secondary">Kết quả:</h5>
+                <p id="result" class="fs-4 fw-bold text-success mb-0">Chưa có kết quả</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Đoạn mã JavaScript xử lý logic -->
+    <script>
+        function handleSubmit(event) {
+            // Ngăn chặn trang web load lại khi submit form
+            event.preventDefault();
+
+            // Lấy giá trị số đầu và số cuối từ input và chuyển sang kiểu số nguyên
+            const start = parseInt(document.getElementById("startNum").value);
+            const end = parseInt(document.getElementById("endNum").value);
+
+            let product = 1;
+            let count = 0;
+            let foundNumbers = [];
+
+            // Xác định khoảng từ số nhỏ đến số lớn (phòng trường hợp người dùng nhập số đầu lớn hơn số cuối)
+            let min = Math.min(start, end);
+            let max = Math.max(start, end);
+
+            // Duyệt qua khoảng từ min đến max
+            for (let i = min; i <= max; i++) {
+                // Kiểm tra điều kiện chia hết cho 7 và số đó phải khác 0 (hoặc tùy chọn)
+                if (i !== 0 && i % 7 === 0) {
+                    product *= i;
+                    count++;
+                    foundNumbers.push(i);
+                }
+            }
+
+            // Hiển thị kết quả ra màn hình
+            const resultElement = document.getElementById("result");
+            if (count === 0) {
+                resultElement.innerHTML = `Không có số nào chia hết cho 7 trong khoảng từ ${min} đến ${max}.`;
+            } else {
+                resultElement.innerHTML = `Các số chia hết: [${foundNumbers.join(", ")}] <br> Tích là: <strong>${product}</strong>`;
+            }
+
+            // Ghi log kiểm tra trên Console của trình duyệt theo mẫu gợi ý
+            console.log(`Khoảng: từ ${min} đến ${max}`);
+            console.log(`Các số chia hết cho 7:`, foundNumbers);
+            console.log(`Tích kết quả:`, product);
+        }
+    </script>
+
+</body>
+</html>
